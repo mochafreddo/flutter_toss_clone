@@ -18,7 +18,13 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   TabItem _currentTab = TabItem.home;
-  final tabs = [TabItem.home, TabItem.favorite];
+  final tabs = [
+    TabItem.home,
+    TabItem.benefit,
+    TabItem.ttosspay,
+    TabItem.stock,
+    TabItem.all,
+  ];
   final List<GlobalKey<NavigatorState>> navigatorKeys = [];
 
   int get _currentIndex => tabs.indexOf(_currentTab);
@@ -51,7 +57,7 @@ class MainScreenState extends State<MainScreen>
     return WillPopScope(
       onWillPop: _handleBackPressed,
       child: Scaffold(
-        extendBody: extendBody, //bottomNavigationBar 아래 영역 까지 그림
+        extendBody: extendBody, // bottomNavigationBar 아래 영역 까지 그림
         drawer: const MenuDrawer(),
         body: Container(
           color: context.appColors.seedColor.getMaterialColorValues[200],
@@ -68,16 +74,19 @@ class MainScreenState extends State<MainScreen>
   }
 
   IndexedStack get pages => IndexedStack(
-      index: _currentIndex,
-      children: tabs
-          .mapIndexed((tab, index) => Offstage(
+        index: _currentIndex,
+        children: tabs
+            .mapIndexed(
+              (tab, index) => Offstage(
                 offstage: _currentTab != tab,
                 child: TabNavigator(
                   navigatorKey: navigatorKeys[index],
                   tabItem: tab,
                 ),
-              ))
-          .toList());
+              ),
+            )
+            .toList(),
+      );
 
   Future<bool> _handleBackPressed() async {
     final isFirstRouteInCurrentTab =
@@ -94,11 +103,13 @@ class MainScreenState extends State<MainScreen>
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        boxShadow: [
-          BoxShadow(color: Colors.black26, spreadRadius: 0, blurRadius: 10),
-        ],
-      ),
+      decoration: const BoxDecoration(boxShadow: [
+        BoxShadow(
+          color: Colors.black26,
+          spreadRadius: 0,
+          blurRadius: 10,
+        )
+      ]),
       child: ClipRRect(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(bottomNavigationBarBorderRadius),
@@ -120,12 +131,10 @@ class MainScreenState extends State<MainScreen>
 
   List<BottomNavigationBarItem> navigationBarItems(BuildContext context) {
     return tabs
-        .mapIndexed(
-          (tab, index) => tab.toNavigationBarItem(
-            context,
-            isActivated: _currentIndex == index,
-          ),
-        )
+        .mapIndexed((tab, index) => tab.toNavigationBarItem(
+              context,
+              isActivated: _currentIndex == index,
+            ))
         .toList();
   }
 
@@ -135,17 +144,22 @@ class MainScreenState extends State<MainScreen>
     });
   }
 
-  BottomNavigationBarItem bottomItem(bool activate, IconData iconData,
-      IconData inActivateIconData, String label) {
+  BottomNavigationBarItem bottomItem(
+    bool activate,
+    IconData iconData,
+    IconData inActivateIconData,
+    String label,
+  ) {
     return BottomNavigationBarItem(
-        icon: Icon(
-          key: ValueKey(label),
-          activate ? iconData : inActivateIconData,
-          color: activate
-              ? context.appColors.iconButton
-              : context.appColors.iconButtonInactivate,
-        ),
-        label: label);
+      icon: Icon(
+        key: ValueKey(label),
+        activate ? iconData : inActivateIconData,
+        color: activate
+            ? context.appColors.iconButton
+            : context.appColors.iconButtonInactivate,
+      ),
+      label: label,
+    );
   }
 
   void _handleOnTapNavigationBarItem(int index) {
