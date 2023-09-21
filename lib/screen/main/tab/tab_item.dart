@@ -25,14 +25,13 @@ enum TabItem {
   BottomNavigationBarItem toNavigationBarItem(BuildContext context,
       {required bool isActivated}) {
     return BottomNavigationBarItem(
-      icon: Icon(
-        key: ValueKey(tabName),
-        isActivated ? activeIcon : inActiveIcon,
-        color: isActivated
-            ? context.appColors.iconButton
-            : context.appColors.iconButtonInactivate,
-      ),
-      label: tabName,
-    );
+        icon: Icon(
+          key: ValueKey(tabName),
+          isActivated ? activeIcon : inActiveIcon,
+          color: isActivated
+              ? context.appColors.iconButton
+              : context.appColors.iconButtonInactivate,
+        ),
+        label: tabName);
   }
 }
