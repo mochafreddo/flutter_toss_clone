@@ -1,12 +1,13 @@
-import 'package:after_layout/after_layout.dart';
-import 'package:fast_app_base/common/cli_common.dart';
-import 'package:fast_app_base/screen/main/tab/tab_item.dart';
-import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
 import 'package:flutter/material.dart';
+
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
+import 'package:fast_app_base/common/cli_common.dart';
 import 'package:fast_app_base/common/common.dart';
-import 'w_menu_drawer.dart';
+import 'package:fast_app_base/screen/main/tab/tab_item.dart';
+import 'package:fast_app_base/screen/main/tab/tab_navigator.dart';
+import 'package:fast_app_base/screen/main/w_menu_drawer.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -23,7 +24,7 @@ class MainScreenState extends State<MainScreen>
     TabItem.benefit,
     TabItem.ttosspay,
     TabItem.stock,
-    TabItem.all
+    TabItem.all,
   ];
   final List<GlobalKey<NavigatorState>> navigatorKeys = [];
 
@@ -38,9 +39,10 @@ class MainScreenState extends State<MainScreen>
 
   @override
   void afterFirstLayout(BuildContext context) {
-    delay(() {
-      FlutterNativeSplash.remove();
-    }, 1500.ms);
+    delay(
+      () => FlutterNativeSplash.remove(),
+      1500.ms,
+    );
   }
 
   @override
@@ -52,28 +54,39 @@ class MainScreenState extends State<MainScreen>
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _handleBackPressed,
-        child: Scaffold(
-            extendBody: extendBody, // bottomNavigationBar 아래 영역 까지 그림
-            drawer: const MenuDrawer(),
-            body: Container(
-              color: context.appColors.seedColor.getMaterialColorValues[200],
-              padding: EdgeInsets.only(
-                  bottom:
-                      extendBody ? 60 - bottomNavigationBarBorderRadius : 0),
-              child: SafeArea(bottom: !extendBody, child: pages),
-            ),
-            bottomNavigationBar: _buildBottomNavigationBar(context)));
+      onWillPop: _handleBackPressed,
+      child: Scaffold(
+        extendBody: extendBody, // bottomNavigationBar 아래 영역 까지 그림
+        drawer: const MenuDrawer(),
+        body: Container(
+          color: context.appColors.seedColor.getMaterialColorValues[200],
+          padding: EdgeInsets.only(
+            bottom: extendBody ? 60 - bottomNavigationBarBorderRadius : 0,
+          ),
+          child: SafeArea(
+            bottom: !extendBody,
+            child: pages,
+          ),
+        ),
+        bottomNavigationBar: _buildBottomNavigationBar(context),
+      ),
+    );
   }
 
   IndexedStack get pages => IndexedStack(
-      index: _currentIndex,
-      children: tabs
-          .mapIndexed((tab, index) => Offstage(
-              offstage: _currentTab != tab,
-              child: TabNavigator(
-                  navigatorKey: navigatorKeys[index], tabItem: tab)))
-          .toList());
+        index: _currentIndex,
+        children: tabs
+            .mapIndexed(
+              (tab, index) => Offstage(
+                offstage: _currentTab != tab,
+                child: TabNavigator(
+                  navigatorKey: navigatorKeys[index],
+                  tabItem: tab,
+                ),
+              ),
+            )
+            .toList(),
+      );
 
   Future<bool> _handleBackPressed() async {
     final isFirstRouteInCurrentTab =
@@ -90,28 +103,42 @@ class MainScreenState extends State<MainScreen>
 
   Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
-        decoration: const BoxDecoration(boxShadow: [
-          BoxShadow(color: Colors.black26, spreadRadius: 0, blurRadius: 10)
-        ]),
-        child: ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(bottomNavigationBarBorderRadius),
-                topRight: Radius.circular(bottomNavigationBarBorderRadius)),
-            child: BottomNavigationBar(
-                items: navigationBarItems(context),
-                currentIndex: _currentIndex,
-                selectedItemColor: context.appColors.text,
-                unselectedItemColor: context.appColors.iconButtonInactivate,
-                onTap: _handleOnTapNavigationBarItem,
-                showSelectedLabels: true,
-                showUnselectedLabels: true,
-                type: BottomNavigationBarType.fixed)));
+      decoration: const BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black26,
+            spreadRadius: 0,
+            blurRadius: 10,
+          )
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(bottomNavigationBarBorderRadius),
+          topRight: Radius.circular(bottomNavigationBarBorderRadius),
+        ),
+        child: BottomNavigationBar(
+          items: navigationBarItems(context),
+          currentIndex: _currentIndex,
+          selectedItemColor: context.appColors.text,
+          unselectedItemColor: context.appColors.iconButtonInactivate,
+          onTap: _handleOnTapNavigationBarItem,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+        ),
+      ),
+    );
   }
 
   List<BottomNavigationBarItem> navigationBarItems(BuildContext context) {
     return tabs
-        .mapIndexed((tab, index) => tab.toNavigationBarItem(context,
-            isActivated: _currentIndex == index))
+        .mapIndexed(
+          (tab, index) => tab.toNavigationBarItem(
+            context,
+            isActivated: _currentIndex == index,
+          ),
+        )
         .toList();
   }
 
@@ -128,13 +155,15 @@ class MainScreenState extends State<MainScreen>
     String label,
   ) {
     return BottomNavigationBarItem(
-        icon: Icon(
-            key: ValueKey(label),
-            activate ? iconData : inActivateIconData,
-            color: activate
-                ? context.appColors.iconButton
-                : context.appColors.iconButtonInactivate),
-        label: label);
+      icon: Icon(
+        key: ValueKey(label),
+        activate ? iconData : inActivateIconData,
+        color: activate
+            ? context.appColors.iconButton
+            : context.appColors.iconButtonInactivate,
+      ),
+      label: label,
+    );
   }
 
   void _handleOnTapNavigationBarItem(int index) {

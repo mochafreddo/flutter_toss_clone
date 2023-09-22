@@ -10,10 +10,7 @@ class Arrow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Icon(
-      icon,
-      size: size,
-    );
+    return Icon(icon, size: size);
   }
 
   IconData get icon {

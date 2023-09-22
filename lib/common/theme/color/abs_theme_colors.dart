@@ -1,5 +1,6 @@
-import 'package:fast_app_base/common/constant/app_colors.dart';
 import 'package:flutter/material.dart';
+
+import 'package:fast_app_base/common/constant/app_colors.dart';
 
 export 'package:fast_app_base/common/constant/app_colors.dart';
 
@@ -45,4 +46,11 @@ abstract class AbstractThemeColors {
   Color get snackbarBgColor => AppColors.mediumBlue;
 
   Color get blueButtonBackground => AppColors.darkBlue;
+
+  Color get appBarBackground => const Color.fromARGB(255, 16, 16, 18);
+
+  Color get buttonBackgroundColor => const Color.fromARGB(255, 48, 48, 48);
+
+  Color get roundedLayoutBackgroundColor =>
+      const Color.fromARGB(255, 24, 24, 24);
 }

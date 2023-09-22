@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const emptyExpanded = EmptyExpanded();
+
 class EmptyExpanded extends StatelessWidget {
   final int flex;
 
@@ -7,9 +9,6 @@ class EmptyExpanded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      flex: flex,
-      child: Container(),
-    );
+    return Expanded(flex: flex, child: Container());
   }
 }

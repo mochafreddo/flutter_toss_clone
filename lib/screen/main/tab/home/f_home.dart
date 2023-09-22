@@ -1,71 +1,66 @@
-import 'package:fast_app_base/common/common.dart';
-import 'package:fast_app_base/common/widget/round_button_theme.dart';
-import 'package:fast_app_base/common/widget/w_round_button.dart';
-import 'package:fast_app_base/screen/dialog/d_message.dart';
 import 'package:flutter/material.dart';
 
-import '../../../dialog/d_color_bottom.dart';
-import '../../../dialog/d_confirm.dart';
+import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/widget/w_big_button.dart';
+import 'package:fast_app_base/common/widget/w_rounded_container.dart';
+import 'package:fast_app_base/screen/dialog/d_color_bottom.dart';
+import 'package:fast_app_base/screen/dialog/d_confirm.dart';
+import 'package:fast_app_base/screen/dialog/d_message.dart';
+import 'package:fast_app_base/screen/main/tab/home/vo/bank_account_dummy.dart';
+import 'package:fast_app_base/screen/main/tab/home/w_bank_account.dart';
+import 'package:fast_app_base/screen/main/tab/home/w_ttoss_app_bar.dart';
 
 class HomeFragment extends StatelessWidget {
-  const HomeFragment({
-    Key? key,
-  }) : super(key: key);
+  const HomeFragment({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: context.appColors.seedColor.getMaterialColorValues[100],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+      color: Colors.black,
+      child: Stack(
         children: [
-          Row(
-            children: [
-              IconButton(
-                onPressed: () => openDrawer(context),
-                icon: const Icon(Icons.menu),
-              )
-            ],
+          SingleChildScrollView(
+            padding: const EdgeInsets.only(top: 60),
+            child: Column(
+              children: [
+                BigButton(
+                  '토스뱅크',
+                  onTap: () => context.showSnackbar('토스뱅크를 눌렀어요.'),
+                ),
+                height10,
+                RoundedContainer(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '자산'.text.bold.white.make(),
+                      height5,
+                      ...bankAccounts.map((e) => BankAccountWidget(e)).toList(),
+                    ],
+                  ),
+                ),
+              ],
+            ).pSymmetric(h: 20),
           ),
-          const EmptyExpanded(),
-          RoundButton(
-            text: 'Snackbar 보이기',
-            onTap: () => showSnackbar(context),
-            theme: RoundButtonTheme.blue,
-          ),
-          const Height(20),
-          RoundButton(
-            text: 'Confirm 다이얼로그',
-            onTap: () => showConfirmDialog(context),
-            theme: RoundButtonTheme.whiteWithBlueBorder,
-          ),
-          const Height(20),
-          RoundButton(
-            text: 'Message 다이얼로그',
-            onTap: showMessageDialog,
-            theme: RoundButtonTheme.whiteWithBlueBorder,
-          ),
-          const Height(20),
-          RoundButton(
-            text: '메뉴 보기',
-            onTap: () => openDrawer(context),
-            theme: RoundButtonTheme.blink,
-          ),
-          const EmptyExpanded()
+          const TtossAppBar()
         ],
       ),
     );
   }
 
   void showSnackbar(BuildContext context) {
-    context.showSnackbar('snackbar 입니다.',
-        extraButton: Tap(
-          onTap: () {
-            context.showErrorSnackbar('error');
-          },
-          child: '에러 보여주기 버튼'.text.white.size(13).make().centered().pSymmetric(h: 10, v: 5),
-        ));
+    context.showSnackbar(
+      'snackbar 입니다.',
+      extraButton: Tap(
+        onTap: () => context.showErrorSnackbar('error'),
+        child: '에러 보여주기 버튼'
+            .text
+            .white
+            .size(13)
+            .make()
+            .centered()
+            .pSymmetric(h: 10, v: 5),
+      ),
+    );
   }
 
   Future<void> showConfirmDialog(BuildContext context) async {
@@ -76,21 +71,21 @@ class HomeFragment extends StatelessWidget {
     ).show();
     debugPrint(confirmDialogResult?.isSuccess.toString());
 
-    confirmDialogResult?.runIfSuccess((data) {
-      ColorBottomSheet(
+    confirmDialogResult?.runIfSuccess(
+      (data) => ColorBottomSheet(
         '❤️',
         context: context,
         backgroundColor: Colors.yellow.shade200,
-      ).show();
-    });
+      ).show(),
+    );
 
-    confirmDialogResult?.runIfFailure((data) {
-      ColorBottomSheet(
+    confirmDialogResult?.runIfFailure(
+      (data) => ColorBottomSheet(
         '❤️힘내여',
         backgroundColor: Colors.yellow.shade300,
         textColor: Colors.redAccent,
-      ).show();
-    });
+      ).show(),
+    );
   }
 
   Future<void> showMessageDialog() async {
