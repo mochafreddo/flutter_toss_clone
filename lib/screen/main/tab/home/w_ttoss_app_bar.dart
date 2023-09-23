@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fast_app_base/common/common.dart';
 
 class TtossAppBar extends StatefulWidget {
+  static const double appBarHeight = 60;
+
   const TtossAppBar({super.key});
 
   @override
@@ -15,7 +17,7 @@ class _TtossAppBarState extends State<TtossAppBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
+      height: TtossAppBar.appBarHeight,
       color: context.appColors.appBarBackground,
       child: Row(
         children: [
@@ -25,11 +27,7 @@ class _TtossAppBarState extends State<TtossAppBar> {
           Image.asset('$basePath/icon/map_point.png', height: 30),
           width10,
           Tap(
-            onTap: () {
-              setState(() {
-                _showRedDot = !_showRedDot;
-              });
-            },
+            onTap: () => setState(() => _showRedDot = !_showRedDot),
             child: Stack(
               children: [
                 Image.asset('$basePath/icon/notification.png', height: 30),
@@ -48,7 +46,7 @@ class _TtossAppBarState extends State<TtossAppBar> {
               ],
             ),
           ),
-          width10,
+          width10
         ],
       ),
     );

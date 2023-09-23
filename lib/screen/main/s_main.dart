@@ -37,6 +37,8 @@ class MainScreenState extends State<MainScreen>
 
   static double get bottomNavigationBarBorderRadius => 30.0;
 
+  static const double bottomNavigatorBarHeight = 50;
+
   @override
   void afterFirstLayout(BuildContext context) {
     delay(
@@ -61,8 +63,7 @@ class MainScreenState extends State<MainScreen>
         body: Container(
           color: context.appColors.seedColor.getMaterialColorValues[200],
           padding: EdgeInsets.only(
-            bottom: extendBody ? 60 - bottomNavigationBarBorderRadius : 0,
-          ),
+              bottom: extendBody ? 60 - bottomNavigationBarBorderRadius : 0),
           child: SafeArea(
             bottom: !extendBody,
             child: pages,
@@ -133,19 +134,15 @@ class MainScreenState extends State<MainScreen>
 
   List<BottomNavigationBarItem> navigationBarItems(BuildContext context) {
     return tabs
-        .mapIndexed(
-          (tab, index) => tab.toNavigationBarItem(
-            context,
-            isActivated: _currentIndex == index,
-          ),
-        )
+        .mapIndexed((tab, index) => tab.toNavigationBarItem(
+              context,
+              isActivated: _currentIndex == index,
+            ))
         .toList();
   }
 
   void _changeTab(int index) {
-    setState(() {
-      _currentTab = tabs[index];
-    });
+    setState(() => _currentTab = tabs[index]);
   }
 
   BottomNavigationBarItem bottomItem(
