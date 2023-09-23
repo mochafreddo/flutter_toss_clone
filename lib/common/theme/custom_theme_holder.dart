@@ -1,7 +1,7 @@
-import 'package:fast_app_base/common/theme/custom_theme.dart';
 import 'package:flutter/material.dart';
 
-import '../common.dart';
+import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/common/theme/custom_theme.dart';
 
 class CustomThemeHolder extends InheritedWidget {
   final AbstractThemeColors appColors;
@@ -16,7 +16,10 @@ class CustomThemeHolder extends InheritedWidget {
     Key? key,
   })  : appColors = theme.appColors,
         appShadows = theme.appShadows,
-        super(key: key, child: child);
+        super(
+          key: key,
+          child: child,
+        );
 
   @override
   bool updateShouldNotify(CustomThemeHolder oldWidget) {

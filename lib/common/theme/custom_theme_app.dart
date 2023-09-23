@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../app.dart';
-import '../data/preference/prefs.dart';
+import 'package:fast_app_base/app.dart';
+import 'package:fast_app_base/common/data/preference/prefs.dart';
+
 import 'custom_theme.dart';
 import 'custom_theme_holder.dart';
 import 'theme_util.dart';
@@ -9,7 +10,10 @@ import 'theme_util.dart';
 class CustomThemeApp extends StatefulWidget {
   final Widget child;
 
-  const CustomThemeApp({Key? key, required this.child}) : super(key: key);
+  const CustomThemeApp({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   @override
   State<CustomThemeApp> createState() => _CustomThemeAppState();
