@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:fast_app_base/common/common.dart';
+import 'package:fast_app_base/screen/notification/s_notification.dart';
 
 class TtossAppBar extends StatefulWidget {
   static const double appBarHeight = 60;
@@ -12,7 +13,7 @@ class TtossAppBar extends StatefulWidget {
 }
 
 class _TtossAppBarState extends State<TtossAppBar> {
-  bool _showRedDot = false;
+  final bool _showRedDot = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,10 @@ class _TtossAppBarState extends State<TtossAppBar> {
           Image.asset('$basePath/icon/map_point.png', height: 30),
           width10,
           Tap(
-            onTap: () => setState(() => _showRedDot = !_showRedDot),
+            onTap: () {
+              // 알림 화면
+              Nav.push(const NotificationScreen());
+            },
             child: Stack(
               children: [
                 Image.asset('$basePath/icon/notification.png', height: 30),
@@ -39,14 +43,16 @@ class _TtossAppBarState extends State<TtossAppBar> {
                         width: 6,
                         height: 6,
                         decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.red),
+                          shape: BoxShape.circle,
+                          color: Colors.red,
+                        ),
                       ),
                     ),
-                  )
+                  ),
               ],
             ),
           ),
-          width10
+          width10,
         ],
       ),
     );
