@@ -60,8 +60,7 @@ class MainScreenState extends State<MainScreen>
       child: Scaffold(
         extendBody: extendBody, // bottomNavigationBar 아래 영역 까지 그림
         drawer: const MenuDrawer(),
-        body: Container(
-          color: context.appColors.seedColor.getMaterialColorValues[200],
+        body: Padding(
           padding: EdgeInsets.only(
               bottom: extendBody ? 60 - bottomNavigationBarBorderRadius : 0),
           child: SafeArea(
@@ -94,7 +93,9 @@ class MainScreenState extends State<MainScreen>
         (await _currentTabNavigationKey.currentState?.maybePop() == false);
     if (isFirstRouteInCurrentTab) {
       if (_currentTab != TabItem.home) {
-        _changeTab(tabs.indexOf(TabItem.home));
+        _changeTab(
+          tabs.indexOf(TabItem.home),
+        );
         return false;
       }
     }
@@ -134,15 +135,19 @@ class MainScreenState extends State<MainScreen>
 
   List<BottomNavigationBarItem> navigationBarItems(BuildContext context) {
     return tabs
-        .mapIndexed((tab, index) => tab.toNavigationBarItem(
-              context,
-              isActivated: _currentIndex == index,
-            ))
+        .mapIndexed(
+          (tab, index) => tab.toNavigationBarItem(
+            context,
+            isActivated: _currentIndex == index,
+          ),
+        )
         .toList();
   }
 
   void _changeTab(int index) {
-    setState(() => _currentTab = tabs[index]);
+    setState(() {
+      _currentTab = tabs[index];
+    });
   }
 
   BottomNavigationBarItem bottomItem(
@@ -184,7 +189,9 @@ class MainScreenState extends State<MainScreen>
 
   void initNavigatorKeys() {
     for (final _ in tabs) {
-      navigatorKeys.add(GlobalKey<NavigatorState>());
+      navigatorKeys.add(
+        GlobalKey<NavigatorState>(),
+      );
     }
   }
 }

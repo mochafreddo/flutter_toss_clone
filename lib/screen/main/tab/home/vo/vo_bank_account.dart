@@ -5,5 +5,9 @@ class BankAccount {
   int balance;
   final String? accountTypeName;
 
-  BankAccount(this.bank, this.balance, {this.accountTypeName});
+  BankAccount(
+    this.bank,
+    this.balance, {
+    this.accountTypeName,
+  });
 }

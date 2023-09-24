@@ -8,7 +8,7 @@ import 'package:fast_app_base/screen/dialog/d_color_bottom.dart';
 import 'package:fast_app_base/screen/dialog/d_confirm.dart';
 import 'package:fast_app_base/screen/dialog/d_message.dart';
 import 'package:fast_app_base/screen/main/s_main.dart';
-import 'package:fast_app_base/screen/main/tab/home/vo/bank_account_dummy.dart';
+import 'package:fast_app_base/screen/main/tab/home/bank_account_dummy.dart';
 import 'package:fast_app_base/screen/main/tab/home/w_bank_account.dart';
 import 'package:fast_app_base/screen/main/tab/home/w_ttoss_app_bar.dart';
 
@@ -43,7 +43,9 @@ class HomeFragment extends StatelessWidget {
                         '자산'.text.bold.white.make(),
                         height5,
                         ...bankAccounts
-                            .map((e) => BankAccountWidget(e))
+                            .map(
+                              (e) => BankAccountWidget(e),
+                            )
                             .toList()
                       ],
                     ),
@@ -77,7 +79,9 @@ class HomeFragment extends StatelessWidget {
       buttonText: '네',
       cancelButtonText: '아니오',
     ).show();
-    debugPrint(confirmDialogResult?.isSuccess.toString());
+    debugPrint(
+      confirmDialogResult?.isSuccess.toString(),
+    );
 
     confirmDialogResult?.runIfSuccess(
       (data) => ColorBottomSheet(
@@ -98,7 +102,9 @@ class HomeFragment extends StatelessWidget {
 
   Future<void> showMessageDialog() async {
     final result = await MessageDialog('안녕하세요').show();
-    debugPrint(result.toString());
+    debugPrint(
+      result.toString(),
+    );
   }
 
   void openDrawer(BuildContext context) {
