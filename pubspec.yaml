@@ -114,8 +114,8 @@ flutter:
     - assets/image/notification/
     - assets/image/splash/
     - assets/image/stock/
-    - assets/translations/
     - assets/json/
+    - assets/translations/
     - assets/
 
   # An image asset can refer to one or more resolution-specific "variants", see
